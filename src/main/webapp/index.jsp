@@ -20,5 +20,6 @@ time on server is ${stuff}
 
 <br/>
 <a href="hello-servlet">Hello Servlet</a>
+<a href="">Hello Servlet</a>
 </body>
 </html>
