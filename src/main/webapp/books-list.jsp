@@ -16,43 +16,85 @@
 
 <body>
 <style>
-    .image {
-        width : 10% ;
-        height : 10%;
+    body{
+        font-family: Arial, sans-serif;
+        margin: 20px;
     }
+    h1{
+        color: red;
+        text-align: center;
+    }
+    table{
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th,td{
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ccc;
+
+    }
+
+    tr:nth-child(even){
+        background-color: #f2f2f2;
+
+    }
+    tr:hover{
+        background-color: #e0e0e0;
+    }
+
+    .button{
+        display: inline-block;
+        background-color: #4CAF50;
+        color: white;
+        padding: 8px 16px;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+    }
+    .button-delete{
+        display: inline-block;
+        background-color: red;
+        color: white;
+        padding: 8px 16px;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+    }
+    .button:hover{
+        background-color: #45a049;
+    }
+    .add-button{
+        margin-bottom: 10px;
+    }
+
+    .image{
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        overflow: hidden;
+
+    }
+    form{
+        margin-left: 1150px;
+    }
+    p{
+        margin-left: 1150px;
+    }
+    .input1{
+        color: #cccccc;
+        height: 35px;
+        border-radius: 4px;
+    }
+
 </style>
 <h1>Books List</h1>
-<a class="button add-button" href="books?action=new">Add New Book</a>
-
-<table>
-    <tr>
-        <th>ID</th>
-        <th>bookTitle</th>
-        <th>bookPrice</th>
-        <th>author</th>
-        <th>quantity</th>
-        <th>img</th>
-    </tr>
-    <c:forEach var="books" items="${booksList}">
-        <tr>
-            <td>${books.bookId}</td>
-            <td>${books.bookTitle}</td>
-            <td>${books.bookPrice}</td>
-            <td>${books.author}</td>
-            <td>${books.quantity}</td>
-            <td><img src="${books.img}" alt="img" class="image"></td>
-            <td>
-
-                <a class="button" href="books?action=edit&bookId=${books.bookId}">Edit</a>
-                <a class="button" href="books?action=delete&bookId=${books.bookId}" onclick="return confirm('Are you sure delete this book?')">Delete</a>
-            </td>
-        </tr>
-    </c:forEach>
-</table>
-
 <form action="books?action=searchByName" method="post">
-    <input type="text" name="bookName" placeholder="Enter book name">
-    <button type="submit">Search</button>
+    <input type="text" name="bookName" placeholder="Enter book name" class="input1">
+    <button class="button" type="submit">Search</button>
 </form>
 
 <%
@@ -66,6 +108,7 @@
         <th>Author</th>
         <th>Price</th>
         <th>Quantity</th>
+        <th>Image</th>
     </tr>
 
     <% for(Books book : searchResult) { %>
@@ -74,12 +117,42 @@
         <td><%= book.getAuthor() %></td>
         <td><%= book.getBookPrice() %></td>
         <td><%= book.getQuantity() %></td>
+        <td><img src="<%= book.getImg()%> " class="image"></td>
     </tr>
     <% } %>
 </table>
 <% } else { %>
 <p>No search results found.</p>
 <% } %>
+
+<a class="button add-button" href="books?action=new">Add New Book</a>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>BookTitle</th>
+        <th>BookPrice</th>
+        <th>Author</th>
+        <th>Quantity</th>
+        <th>Image</th>
+    </tr>
+    <c:forEach var="books" items="${booksList}">
+        <tr>
+            <td>${books.bookId}</td>
+            <td>${books.bookTitle}</td>
+            <td>${books.bookPrice}</td>
+            <td>${books.author}</td>
+            <td>${books.quantity}</td>
+            <td><img src="${books.img}" alt="img" class="image"></td>
+            <td>
+
+                <a class="button" href="books?action=edit&bookId=${books.bookId}">Edit</a>
+                <a class="button-delete"  href="books?action=delete&bookId=${books.bookId}" onclick="return confirm('Are you sure delete this book?')">Delete</a>
+            </td>
+        </tr>
+    </c:forEach>
+</table>
+
 
 
 </body>
